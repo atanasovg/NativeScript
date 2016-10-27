@@ -76,31 +76,33 @@ export class LabelStyler implements style.Styler {
         return {};
     }
 
-    // // text-align
-    // private static setTextAlignmentProperty(view: view.View, newValue: any) {
-    //     var verticalGravity = view._nativeView.getGravity() & android.view.Gravity.VERTICAL_GRAVITY_MASK;
-    //     switch (newValue) {
-    //         case enums.TextAlignment.left:
-    //             view._nativeView.setGravity(android.view.Gravity.LEFT | verticalGravity);
-    //             break;
-    //         case enums.TextAlignment.center:
-    //             view._nativeView.setGravity(android.view.Gravity.CENTER_HORIZONTAL | verticalGravity);
-    //             break;
-    //         case enums.TextAlignment.right:
-    //             view._nativeView.setGravity(android.view.Gravity.RIGHT | verticalGravity);
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // }
+    // text-align
+    private static setTextAlignmentProperty(view: view.View, newValue: any) {
+        let align;
+        switch (newValue) {
+            case enums.TextAlignment.left:
+                align = presentationCore.System.Windows.TextAlignment.Left;
+                break;
+            case enums.TextAlignment.center:
+                align = presentationCore.System.Windows.TextAlignment.Center;
+                break;
+            case enums.TextAlignment.right:
+                align = presentationCore.System.Windows.TextAlignment.Right;
+                break;
+            default:
+                break;
+        }
 
-    // private static resetTextAlignmentProperty(view: view.View, nativeValue: any) {
-    //     view._nativeView.setGravity(nativeValue);
-    // }
+        view._nativeView.TextAlignment = align;
+    }
 
-    // private static getNativeTextAlignmentValue(view: view.View): any {
-    //     return view._nativeView.getGravity();
-    // }
+    private static resetTextAlignmentProperty(view: view.View, nativeValue: any) {
+        view._nativeView.ResetValue(presentationFramework.System.Windows.Controls.TextBlock.TextAlignmentProperty);
+    }
+
+    private static getNativeTextAlignmentValue(view: view.View): any {
+        return undefined;
+    }
 
     // // text-decoration
     // private static setTextDecorationProperty(view: view.View, newValue: any) {
@@ -120,14 +122,19 @@ export class LabelStyler implements style.Styler {
     //     utils.ad.setTextTransform(view, enums.TextTransform.none);
     // }
 
-    // // white-space
-    // private static setWhiteSpaceProperty(view: view.View, newValue: any) {
-    //     utils.ad.setWhiteSpace(view._nativeView, newValue);
-    // }
+    // white-space
+    private static setWhiteSpaceProperty(view: view.View, newValue: any) {
+        if(newValue === enums.WhiteSpace.normal) {
+            view._nativeView.TextWrapping = presentationCore.System.Windows.TextWrapping.Wrap;
+        }
+        else {
+            view._nativeView.TextWrapping = presentationCore.System.Windows.TextWrapping.NoWrap;
+        }
+    }
 
-    // private static resetWhiteSpaceProperty(view: view.View, nativeValue: any) {
-    //     utils.ad.setWhiteSpace(view._nativeView, enums.WhiteSpace.normal);
-    // }
+    private static resetWhiteSpaceProperty(view: view.View, nativeValue: any) {
+        view._nativeView.ResetValue(presentationFramework.System.Windows.Controls.TextBlock.TextWrappingProperty);
+    }
 
     // // letter-spacing
     // private static getLetterSpacingProperty(view: view.View): any {
@@ -156,12 +163,12 @@ export class LabelStyler implements style.Styler {
         style.registerHandler(style.fontInternalProperty, new style.StylePropertyChangedHandler(
             LabelStyler.setFontInternalProperty,
             LabelStyler.resetFontInternalProperty,
-            LabelStyler.getNativeFontInternalValue), "TextBase");
+            LabelStyler.getNativeFontInternalValue), "Label");
 
-        // style.registerHandler(style.textAlignmentProperty, new style.StylePropertyChangedHandler(
-        //     TextBaseStyler.setTextAlignmentProperty,
-        //     TextBaseStyler.resetTextAlignmentProperty,
-        //     TextBaseStyler.getNativeTextAlignmentValue), "TextBase");
+        style.registerHandler(style.textAlignmentProperty, new style.StylePropertyChangedHandler(
+            LabelStyler.setTextAlignmentProperty,
+            LabelStyler.resetTextAlignmentProperty,
+            LabelStyler.getNativeTextAlignmentValue), "Label");
 
         // style.registerHandler(style.textDecorationProperty, new style.StylePropertyChangedHandler(
         //     TextBaseStyler.setTextDecorationProperty,
@@ -171,9 +178,9 @@ export class LabelStyler implements style.Styler {
         //     TextBaseStyler.setTextTransformProperty,
         //     TextBaseStyler.resetTextTransformProperty), "TextBase");
 
-        // style.registerHandler(style.whiteSpaceProperty, new style.StylePropertyChangedHandler(
-        //     TextBaseStyler.setWhiteSpaceProperty,
-        //     TextBaseStyler.resetWhiteSpaceProperty), "TextBase");
+        style.registerHandler(style.whiteSpaceProperty, new style.StylePropertyChangedHandler(
+            LabelStyler.setWhiteSpaceProperty,
+            LabelStyler.resetWhiteSpaceProperty), "Label");
 
         // if (parseInt(device.sdkVersion, 10) >= 21) {
         //     style.registerHandler(style.letterSpacingProperty, new style.StylePropertyChangedHandler(

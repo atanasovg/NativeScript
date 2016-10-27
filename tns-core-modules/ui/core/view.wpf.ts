@@ -285,6 +285,75 @@ export class CustomLayoutView extends View implements viewDefinition.CustomLayou
 }
 
 export class ViewStyler implements style.Styler {
+    private static setNativeLayoutParamsProperty(view: View, params: CommonLayoutParams): void {
+        loadPresentationFramework();
+        let nativeView = view._nativeView;
+
+        let width = params.width;
+        let height = params.height;
+
+        // If width is not specified set it as WRAP_CONTENT
+        if (width < 0) {
+            width = Number.NEGATIVE_INFINITY;
+        }
+
+        // If height is not specified set it as WRAP_CONTENT
+        if (height < 0) {
+            height = Number.NEGATIVE_INFINITY;
+        }
+
+        let hAlign;
+        switch (params.horizontalAlignment) {
+            case enums.HorizontalAlignment.left:
+               	hAlign = presentationFramework.System.Windows.HorizontalAlignment.Left;
+                break;
+            case enums.HorizontalAlignment.center:
+                hAlign = presentationFramework.System.Windows.HorizontalAlignment.Center;
+                break;
+            case enums.HorizontalAlignment.right:
+                hAlign = presentationFramework.System.Windows.HorizontalAlignment.Right;
+                break;
+            case enums.HorizontalAlignment.stretch:
+                hAlign = presentationFramework.System.Windows.HorizontalAlignment.Stretch;
+                break;
+            default:
+                throw new Error("Invalid horizontalAlignment value: " + params.horizontalAlignment);
+        }
+
+        let vAlign;
+        switch (params.verticalAlignment) {
+            case enums.VerticalAlignment.top:
+                vAlign = presentationFramework.System.Windows.VerticalAlignment.Top;
+                break;
+            case enums.VerticalAlignment.center:
+            case enums.VerticalAlignment.middle:
+                vAlign = presentationFramework.System.Windows.VerticalAlignment.Center;
+                break;
+            case enums.VerticalAlignment.bottom:
+                vAlign = presentationFramework.System.Windows.VerticalAlignment.Bottom;
+                break;
+            case enums.VerticalAlignment.stretch:
+                vAlign = presentationFramework.System.Windows.VerticalAlignment.Stretch;
+                break;
+            default:
+                throw new Error("Invalid verticalAlignment value: " + params.verticalAlignment);
+        }
+
+        nativeView.HorizontalAlignment = hAlign;
+        nativeView.VerticalAlignment = vAlign;
+        nativeView.Margin = new presentationFramework.System.Windows.Thickness(params.leftMargin, params.topMargin, params.rightMargin, params.bottomMargin);
+    }
+
+    private static resetNativeLayoutParamsProperty(view: View, nativeValue: any): void {
+        let nativeView = view._nativeView;
+        nativeView.ResetValue(presentationFramework.System.Windows.FrameworkElement.MarginProperty);
+        nativeView.ResetValue(presentationFramework.System.Windows.FrameworkElement.VerticalAlignmentProperty);
+        nativeView.ResetValue(presentationFramework.System.Windows.FrameworkElement.HorizontalAlignmentProperty);
+    }
+
     public static registerHandlers() {
+        style.registerHandler(style.nativeLayoutParamsProperty, new style.StylePropertyChangedHandler(
+            ViewStyler.setNativeLayoutParamsProperty,
+            ViewStyler.resetNativeLayoutParamsProperty));
     }
 }
