@@ -11,6 +11,7 @@ import enums = require("ui/enums");
 import background = require("ui/styling/background");
 import {CommonLayoutParams} from "ui/styling/style";
 import {device} from "platform";
+import font = require("ui/styling/font");
 
 global.moduleMerge(viewCommon, exports);
 
@@ -423,6 +424,36 @@ export class ViewStyler implements style.Styler {
         view._nativeView.Padding = padding;
     }
 
+    private static setFontInternalProperty(view: View, newValue: any, nativeValue?: any) {
+        var contol = view._nativeView;
+        var fontValue = <font.Font>newValue;
+
+        var style = fontValue.fontStyle;
+        if (style) {
+            contol.FontStyle = fontValue.getWPFStyle();
+        }
+        else {
+            contol.ResetValue(presentationFramework.System.Windows.Controls.Control.FontStyleProperty);
+        }
+
+        if (fontValue.fontSize) {
+            contol.FontSize = fontValue.fontSize;
+        }
+        else {
+            contol.ResetValue(presentationFramework.System.Windows.Controls.Control.FontSizeProperty);
+        }
+    }
+
+    private static resetFontInternalProperty(view: View, nativeValue: any) {
+        var contol = view._nativeView;
+        contol.ResetValue(presentationFramework.System.Windows.Controls.Control.FontStyleProperty);
+        contol.ResetValue(presentationFramework.System.Windows.Controls.Control.FontSizeProperty);
+    }
+
+    private static getNativeFontInternalValue(view: View): any {
+        return {};
+    }
+
     public static registerHandlers() {
         style.registerHandler(
             style.nativeLayoutParamsProperty, 
@@ -439,5 +470,8 @@ export class ViewStyler implements style.Styler {
         style.registerHandler(
             style.paddingBottomProperty,
             new style.StylePropertyChangedHandler(ViewStyler.setNativePaddingBottom, ViewStyler.setNativePaddingBottom, ViewStyler.getNativePaddingBottom));
+        style.registerHandler(
+            style.fontInternalProperty, 
+            new style.StylePropertyChangedHandler(ViewStyler.setFontInternalProperty, ViewStyler.resetFontInternalProperty,        ViewStyler.getNativeFontInternalValue));
     }
 }

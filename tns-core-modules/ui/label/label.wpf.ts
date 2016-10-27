@@ -45,37 +45,6 @@ export class LabelStyler implements style.Styler {
         return view._nativeView.Foreground;
     }
 
-    // font
-    private static setFontInternalProperty(view: view.View, newValue: any, nativeValue?: any) {
-        var textBlock = view._nativeView;
-        var fontValue = <font.Font>newValue;
-
-        var style = fontValue.fontStyle;
-        if (style) {
-            textBlock.FontStyle = fontValue.getWPFStyle();
-        }
-        else {
-            textBlock.ResetValue(presentationFramework.System.Windows.Controls.Control.FontStyleProperty);
-        }
-
-        if (fontValue.fontSize) {
-            textBlock.FontSize = fontValue.fontSize;
-        }
-        else {
-            textBlock.ResetValue(presentationFramework.System.Windows.Controls.Control.FontSizeProperty);
-        }
-    }
-
-    private static resetFontInternalProperty(view: view.View, nativeValue: any) {
-        var textBlock = view._nativeView;
-        textBlock.ResetValue(presentationFramework.System.Windows.Controls.Control.FontStyleProperty);
-        textBlock.ResetValue(presentationFramework.System.Windows.Controls.Control.FontSizeProperty);
-    }
-
-    private static getNativeFontInternalValue(view: view.View): any {
-        return {};
-    }
-
     // text-align
     private static setTextAlignmentProperty(view: view.View, newValue: any) {
         let align;
@@ -159,11 +128,6 @@ export class LabelStyler implements style.Styler {
         //     TextBaseStyler.setPlaceholderColorProperty,
         //     TextBaseStyler.resetPlaceholderColorProperty,
         //     TextBaseStyler.getNativePlaceholderColorValue), "TextBase");
-
-        style.registerHandler(style.fontInternalProperty, new style.StylePropertyChangedHandler(
-            LabelStyler.setFontInternalProperty,
-            LabelStyler.resetFontInternalProperty,
-            LabelStyler.getNativeFontInternalValue), "Label");
 
         style.registerHandler(style.textAlignmentProperty, new style.StylePropertyChangedHandler(
             LabelStyler.setTextAlignmentProperty,
