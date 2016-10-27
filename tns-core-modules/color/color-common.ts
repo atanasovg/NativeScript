@@ -89,12 +89,30 @@ export class Color implements definition.Color {
         return undefined;
     }
 
-    public _argbFromString(hex: string): number {
+    get wpf(): any {
         return undefined;
+    }
+
+    public _argbFromString(hex: string): number {
+        return Color.defaultArgbFromString(hex);
     }
 
     public equals(value: definition.Color): boolean {
         return this.argb === value.argb;
+    }
+
+    public static defaultArgbFromString(hex: string) {
+        if (hex.charAt(0) === AMP) {
+            hex = hex.substr(1);
+        }
+
+        var intVal = parseInt(hex, 16);
+        if (hex.length === 6) {
+            // add the alpha component since the provided string is RRGGBB
+            intVal |= 255 << 24;
+        }
+
+        return intVal;
     }
 
     public static equals(value1: definition.Color, value2: definition.Color): boolean {

@@ -100,6 +100,7 @@ interface Console {
 
 declare var console: Console;
 declare var require: NativeScriptRequire;
+declare var requireAssembly: any;
 
 // Global functions
 declare function Deprecated(target: Object, key?: string | symbol, value?: any): void;

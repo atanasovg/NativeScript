@@ -56,6 +56,8 @@ declare module "color" {
          */
         ios: any /* UIColor */;
 
+        wpf: any /* System.Windows.Media.Color */
+
         /**
          * Specifies whether this Color is equal to the Color parameter.
          * @param value The Color to test.

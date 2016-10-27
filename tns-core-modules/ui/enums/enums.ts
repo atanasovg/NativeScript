@@ -86,6 +86,7 @@ export module FontAttributes {
 export module DeviceType {
     export var Phone: string = "Phone";
     export var Tablet: string = "Tablet";
+    export var Desktop: string = "Desktop";
 }
 
 export module UpdateTextTrigger {

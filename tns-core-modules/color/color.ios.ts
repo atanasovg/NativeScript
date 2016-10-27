@@ -12,18 +12,4 @@ export class Color extends common.Color {
         }
         return this._ios;
     }
-
-    public _argbFromString(hex: string): number {
-        if (hex.charAt(0) === AMP) {
-            hex = hex.substr(1);
-        }
-
-        var intVal = parseInt(hex, 16);
-        if (hex.length === 6) {
-            // add the alpha component since the provided string is RRGGBB
-            intVal |= 255 << 24;
-        }
-
-        return intVal;
-    }
 } 

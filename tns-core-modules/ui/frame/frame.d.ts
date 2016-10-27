@@ -100,6 +100,8 @@ declare module "ui/frame" {
          */
         ios: iOSFrame;
 
+        wpf: WPFFrame;
+
         //@private
         navigationQueueIsEmpty(): boolean;
         navigationBarHeight: number;
@@ -355,6 +357,10 @@ declare module "ui/frame" {
         //@private
         _disableNavBarAnimation: boolean;
         //@endprivate
+    }
+
+    export interface WPFFrame {
+        rootView: any;
     }
 
     export function setActivityCallbacks(activity: any /*android.app.Activity*/): void;

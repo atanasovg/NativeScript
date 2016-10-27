@@ -259,6 +259,8 @@
          * Indicates a tablet device.
          */
         export var Tablet: string;
+
+        export var Desktop: string;
     }
 
     /**

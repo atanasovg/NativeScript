@@ -64,6 +64,10 @@ export class Font implements definitios.Font {
         return undefined;
     }
 
+    public getWPFStyle(): any {
+        return undefined;
+    }
+
     public getUIFont(defaultFont: UIFont): UIFont {
         return undefined;
     }

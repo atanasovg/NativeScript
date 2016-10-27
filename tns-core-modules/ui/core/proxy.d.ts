@@ -42,6 +42,8 @@
          */
         public ios: any;
 
+        public wpf: any;
+
         /**
          * A property is changed.
          */

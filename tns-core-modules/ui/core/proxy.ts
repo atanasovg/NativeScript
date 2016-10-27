@@ -41,6 +41,10 @@ export class ProxyObject extends bindable.Bindable implements definition.ProxyOb
     get ios(): any {
         return undefined;
     }
+
+    get wpf(): any {
+        return undefined;
+    }
     
     public _onPropertyChanged(property: dependencyObservable.Property, oldValue: any, newValue: any) {
         super._onPropertyChanged(property, oldValue, newValue);

@@ -258,6 +258,8 @@ declare module "application" {
      */
     export var ios: iOSApplication;
 
+    export var wpf: WPFApplication;
+
     /**
      * Data for the Android activity events.
      */
@@ -336,6 +338,11 @@ declare module "application" {
          * In the event handler, set this value to true if you want to cancel the back navigation and do something else instead.
          */
         cancel: boolean;
+    }
+
+    export interface WPFApplication extends observable.Observable {
+        nativeApp: any; /* System.Windows.Application */
+        mainWindow: any /* System.Windows.Window */
     }
 
     /**

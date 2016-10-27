@@ -13,6 +13,7 @@
         constructor(family: string, size: number, style: string, weight: string);
 
         public getAndroidTypeface(): any /* android.graphics.Typeface */;
+        public getWPFStyle(): any /* System.Windows.FontStyle */;
         public getUIFont(defaultFont: any /* UIFont */): any /* UIFont */;
 
         public withFontFamily(family: string): Font;
