@@ -351,9 +351,93 @@ export class ViewStyler implements style.Styler {
         nativeView.ResetValue(presentationFramework.System.Windows.FrameworkElement.HorizontalAlignmentProperty);
     }
 
+    private static getNativePaddingLeft(view: View): number {
+        let padding = view._nativeView.Padding;
+        if (padding) {
+            return padding.Left;
+        }
+        return undefined;
+    }
+
+    private static getNativePaddingTop(view: View): number {
+        let padding = view._nativeView.Padding;
+        if (padding) {
+            return padding.Top;
+        }
+        return undefined;
+    }
+
+    private static getNativePaddingRight(view: View): number {
+        let padding = view._nativeView.Padding;
+        if (padding) {
+            return padding.Right;
+        }
+        return undefined;
+    }
+
+    private static getNativePaddingBottom(view: View): number {
+        let padding = view._nativeView.Padding;
+        if (padding) {
+            return padding.Bottom;
+        }
+        return undefined;
+    }
+
+    private static setNativePaddingLeft(view: View, value: number): void {
+        let padding = view._nativeView.Padding;
+        if (!padding) {
+            return;
+        }
+
+        padding.Left = value;
+        view._nativeView.Padding = padding;
+    }
+
+    private static setNativePaddingTop(view: View, value: number): void {
+        let padding = view._nativeView.Padding;
+        if (!padding) {
+            return;
+        }
+
+        padding.Top = value;
+        view._nativeView.Padding = padding;
+    }
+
+    private static setNativePaddingRight(view: View, value: number): void {
+        let padding = view._nativeView.Padding;
+        if (!padding) {
+            return;
+        }
+
+        padding.Right = value;
+        view._nativeView.Padding = padding;
+    }
+
+    private static setNativePaddingBottom(view: View, value: number): void {
+        let padding = view._nativeView.Padding;
+        if (!padding) {
+            return;
+        }
+
+        padding.Bottom = value;
+        view._nativeView.Padding = padding;
+    }
+
     public static registerHandlers() {
-        style.registerHandler(style.nativeLayoutParamsProperty, new style.StylePropertyChangedHandler(
-            ViewStyler.setNativeLayoutParamsProperty,
-            ViewStyler.resetNativeLayoutParamsProperty));
+        style.registerHandler(
+            style.nativeLayoutParamsProperty, 
+            new style.StylePropertyChangedHandler(ViewStyler.setNativeLayoutParamsProperty, ViewStyler.resetNativeLayoutParamsProperty));
+        style.registerHandler(
+            style.paddingLeftProperty,
+            new style.StylePropertyChangedHandler(ViewStyler.setNativePaddingLeft, ViewStyler.setNativePaddingLeft, ViewStyler.getNativePaddingLeft));
+        style.registerHandler(
+            style.paddingTopProperty,
+            new style.StylePropertyChangedHandler(ViewStyler.setNativePaddingTop, ViewStyler.setNativePaddingTop, ViewStyler.getNativePaddingTop));
+        style.registerHandler(
+            style.paddingRightProperty,
+            new style.StylePropertyChangedHandler(ViewStyler.setNativePaddingRight, ViewStyler.setNativePaddingRight, ViewStyler.getNativePaddingRight));
+        style.registerHandler(
+            style.paddingBottomProperty,
+            new style.StylePropertyChangedHandler(ViewStyler.setNativePaddingBottom, ViewStyler.setNativePaddingBottom, ViewStyler.getNativePaddingBottom));
     }
 }

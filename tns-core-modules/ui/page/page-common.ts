@@ -75,11 +75,6 @@ export class Page extends ContentView implements dts.Page {
     public _modal: Page;
     public _fragmentTag: string;
 
-    constructor() {
-        super();
-        this.actionBar = new ActionBar();
-    }
-
     public onLoaded() {
         // The default style of the page should be white background
         this.style._setValue(style.backgroundColorProperty, "white", ValueSource.Inherited);
@@ -330,7 +325,9 @@ export class Page extends ContentView implements dts.Page {
 
     public _eachChildView(callback: (child: view.View) => boolean) {
         super._eachChildView(callback);
-        callback(this.actionBar);
+        if(this._actionBar) {
+            callback(this.actionBar);
+        }
     }
 
     get _childrenCount(): number {

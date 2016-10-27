@@ -230,24 +230,26 @@ var appEventAttached: boolean = false;
 var resolverInstance: FileNameResolver;
 
 export function resolveFileName(path: string, ext: string): string {
-    if (!appEventAttached) {
-        var app: typeof appModule = require("application");
-        app.on(app.orientationChangedEvent, (data) => {
-            resolverInstance = undefined;
-        });
-        appEventAttached = true;
-    }
+    // if (!appEventAttached) {
+    //     var app: typeof appModule = require("application");
+    //     app.on(app.orientationChangedEvent, (data) => {
+    //         resolverInstance = undefined;
+    //     });
+    //     appEventAttached = true;
+    // }
 
-    if (!resolverInstance) {
-        resolverInstance = new FileNameResolver({
-            width: platform.screen.mainScreen.widthDIPs,
-            height: platform.screen.mainScreen.heightDIPs,
-            os: platform.device.os,
-            deviceType: platform.device.deviceType
-        });
-    }
+    // if (!resolverInstance) {
+    //     resolverInstance = new FileNameResolver({
+    //         width: platform.screen.mainScreen.widthDIPs,
+    //         height: platform.screen.mainScreen.heightDIPs,
+    //         os: platform.device.os,
+    //         deviceType: platform.device.deviceType
+    //     });
+    // }
 
-    return resolverInstance.resolveFileName(path, ext);
+    // return resolverInstance.resolveFileName(path, ext);
+    // TODO: Fix file-system
+    return path + "." + ext;
 }
 
 export function clearCache(): void {

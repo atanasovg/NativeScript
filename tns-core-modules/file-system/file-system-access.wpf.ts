@@ -179,22 +179,19 @@ export class FileSystemAccess {
     }
 
     public getDocumentsFolderPath(): string {
-        var dir = utils.ad.getApplicationContext().getFilesDir();
-        return dir.getAbsolutePath();
+         return "./js/documents/";
     }
 
     public getLogicalRootPath(): string {
-        var dir = utils.ad.getApplicationContext().getFilesDir();
-        return dir.getCanonicalPath();
+         return "./js/app/";
     }
 
     public getTempFolderPath(): string {
-        var dir = utils.ad.getApplicationContext().getCacheDir();
-        return dir.getAbsolutePath();
+         return "./js/app/";
     }
     
     public getCurrentAppPath(): string {
-        return this.getLogicalRootPath() + "/app";
+         return "./js/app/";
     }
 
     public read(path: string, onError?: (error: any) => any) {
@@ -361,15 +358,11 @@ export class FileSystemAccess {
     }
 
     public normalizePath(path: string): string {
-        var file = new java.io.File(path);
-        return file.getAbsolutePath();
+        return path;
     }
 
     public joinPath(left: string, right: string): string {
-        var file1 = new java.io.File(left);
-        var file2 = new java.io.File(file1, right);
-
-        return file2.getAbsolutePath();
+         return left + this._pathSeparator + right;
     }
 
     public joinPaths(paths: string[]): string {
