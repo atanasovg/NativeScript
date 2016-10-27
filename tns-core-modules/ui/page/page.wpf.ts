@@ -31,7 +31,11 @@ export class Page extends pageCommon.Page {
     constructor() {
         super();
 
+        var that = this;
         this._grid = new presentation.System.Windows.Controls.Grid;
+        this._grid.Loaded.connect(function(s, e) {
+            that.frame._processNavigationQueue(that);
+        });
     }
 
     get wpf(): any {

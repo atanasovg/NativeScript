@@ -57,6 +57,10 @@ export class Frame extends frameCommon.Frame {
     public _navigateCore(backstackEntry: definition.BackstackEntry) {
         super._navigateCore(backstackEntry);
 
+        if (this._currentEntry) {
+            this._removeView(this._currentEntry.resolvedPage);
+        }
+
         let clearHistory = backstackEntry.entry.clearHistory;
 
         // New Fragment
@@ -69,8 +73,10 @@ export class Frame extends frameCommon.Frame {
         backstackEntry.isNavigation = true;
         backstackEntry.navDepth = navDepth;
         this._currentEntry = backstackEntry;
+        let page = backstackEntry.resolvedPage;
+        this._addView(page);
 
-        application.wpf.mainWindow.Content = backstackEntry.resolvedPage._nativeView;
+        application.wpf.mainWindow.Content = page._nativeView;
     }
 
     private static _clearHistory(fragment: android.app.Fragment) {
